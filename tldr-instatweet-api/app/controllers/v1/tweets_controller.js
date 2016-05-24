@@ -10,10 +10,11 @@ module.exports = (function() {
     index() {
 
       Tweet.query()
+        .join( 'user' )
         .where(this.params.query)
         .end((err, models) => {
 
-          this.respond(err || models);
+          this.respond(err || models, [ 'id', 'body', 'created_at', { user: [ 'username', 'email', 'created_at' ] } ] );
 
         });
 
