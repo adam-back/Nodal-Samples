@@ -22,9 +22,12 @@ module.exports = (function() {
 
     show() {
 
-      Tweet.find(this.params.route.id, (err, model) => {
+      Tweet.query()
+        .join( 'user' )
+        .where(this.params.route.id)
+        .end((err, models) => {
 
-        this.respond(err || model);
+          this.respond(err || models, [ 'id', 'body', 'created_at', { user: [ 'username', 'email', 'created_at' ] } ] );
 
       });
 
