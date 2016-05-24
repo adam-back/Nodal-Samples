@@ -24,7 +24,7 @@ module.exports = (function() {
 
       Tweet.query()
         .join( 'user' )
-        .where(this.params.route.id)
+        .where({ id: this.params.route.id })
         .end((err, models) => {
 
           this.respond(err || models, [ 'id', 'body', 'created_at', { user: [ 'username', 'email', 'created_at' ] } ] );
